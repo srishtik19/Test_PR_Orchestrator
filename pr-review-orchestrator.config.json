@@ -1,0 +1,24 @@
+{
+  "provider": "local",
+  "model": "gpt-5.4-mini",
+  "ci": {
+    "failOnSeverity": []
+  },
+  "review": {
+    "includePaths": [
+      "src",
+      "app",
+      "components",
+      "pages",
+      "server",
+      "api"
+    ],
+    "maxContextLines": 12
+  },
+  "repo": {
+    "detectedTypes": [
+      "node",
+      "react"
+    ]
+  }
+}

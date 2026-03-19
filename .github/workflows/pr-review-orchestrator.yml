@@ -1,0 +1,77 @@
+name: PR Review Orchestrator
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm install
+
+      - name: Build PR review tool
+        run: npm run build
+
+      - name: Run review
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-5.4-mini
+          PR_REVIEW_PROVIDER: local
+        run: |
+          git diff origin/${{ github.base_ref }}...HEAD > pr.diff
+          node ./dist/cli.js review --diff ./pr.diff --format github-pr > review.json
+
+      - name: Post PR Review Comments
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const review = JSON.parse(fs.readFileSync('review.json', 'utf8'));
+            const comments = Array.isArray(review.comments) ? review.comments : [];
+
+            if (comments.length > 0) {
+              await github.rest.pulls.createReview({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.payload.pull_request.number,
+                commit_id: context.payload.pull_request.head.sha,
+                event: 'COMMENT',
+                comments: comments.map((comment) => ({
+                  path: comment.path,
+                  line: comment.line,
+                  side: 'RIGHT',
+                  body: comment.body
+                }))
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body: 'PR Review Orchestrator: no high-confidence findings in this run.'
+              });
+            }
+
+      # Uncomment this step later if you want to block the pipeline on high/critical findings.
+      # - name: Block On Severe Findings
+      #   run: |
+      #     node -e "const fs=require('fs'); const review=JSON.parse(fs.readFileSync('review.json','utf8')); if ((review.summary?.critical_count ?? 0) > 0 || (review.summary?.high_count ?? 0) > 0) process.exit(1);"
+
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-review-json
+          path: review.json
