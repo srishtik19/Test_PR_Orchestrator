@@ -28,7 +28,7 @@ jobs:
           node-version: 20
 
       - name: Install PR Review Orchestrator
-        run: npm install --no-save github:monu-daksh/ai-pr-review-orchestrator
+        run: npm install --no-save git+https://github.com/monu-daksh/ai-pr-review-orchestrator.git
 
       - name: Run AI review
         env:
