@@ -5,7 +5,6 @@ export const metadata: Metadata = {
   title: "Dashboard"
 }
 
-
 export default function DashboardPage() {
   const stats:any = [
     { label: "Total Revenue", value: "$48,295", change: "+12.5%", up: true },
