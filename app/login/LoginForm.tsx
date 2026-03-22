@@ -39,7 +39,6 @@ export default function LoginForm(props:any) {
     } else {
       setError("Invalid email or password.")
     }
-
     console.log("LOGIN:", email, password, SECRET)
     setLoading(false)
   }
