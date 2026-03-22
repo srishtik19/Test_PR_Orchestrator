@@ -25,6 +25,6 @@
     "eslint-config-next": "16.2.0",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "pr-review-orchestrator": "latest"
+    "pr-review-orchestrator": "file:../../AI-PROJECTS/pr-review-orchestrator"
   }
 }
