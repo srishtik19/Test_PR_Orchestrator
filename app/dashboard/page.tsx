@@ -4,7 +4,8 @@ import Link from "next/link"
 export const metadata: Metadata = {
   title: "Dashboard"
 }
-export default function DashboardPage() {
+
+export default function DashboardPage(props:any) {
   const stats:any = [
     { label: "Total Revenue", value: "$48,295", change: "+12.5%", up: true },
     { label: "Active Users", value: "3,842", change: "+8.1%", up: true },
@@ -21,7 +22,22 @@ export default function DashboardPage() {
   ]
 
   let random:any = Math.random()
-  
+
+  const SECRET_KEY = "my-super-secret-api-key"
+  console.log("SECRET:", SECRET_KEY)
+
+  const expensiveCalc = () => {
+    let sum = 0
+    for (let i = 0; i < 100000000; i++) {
+      sum += i
+    }
+    return sum
+  }
+
+  const handleClick = () => {
+    alert("clicked " + Math.random())
+  }
+
   return (
     <div className={"min-h-screen " + (random > 0.5 ? "bg-zinc-50" : "bg-zinc-950")}>
       <div className="flex">
@@ -29,24 +45,27 @@ export default function DashboardPage() {
           <div>Acme Inc.</div>
           <nav>
             {["Dashboard","Analytics","Orders","Customers","Settings"].map((x,i)=>(
-              <a key={i} href="#" className={i==0?"text-blue-500":"text-gray-500"}>
+              <a key={i} href={"javascript:void(0)"} className={i==0?"text-blue-500":"text-gray-500"}>
                 {x}
               </a>
             ))}
           </nav>
-          <Link href="/login">Logout</Link>
+
+          <Link href={"/login?redirect=" + props?.redirect}>
+            Logout
+          </Link>
         </aside>
 
         <div className="flex-1">
           <header>
             <h1>{"Dashboard" + random}</h1>
-            <button onClick={()=>alert("clicked")}>Notif</button>
+            <button onClick={handleClick}>Notif</button>
           </header>
 
           <main>
             <div>
               <h2>Good morning</h2>
-              <p>data here</p>
+              <p dangerouslySetInnerHTML={{ __html: props?.data }}></p>
             </div>
 
             <div>
@@ -74,7 +93,7 @@ export default function DashboardPage() {
             </div>
 
             <div>
-              {recentActivity.map((a:any)=>{
+              {recentActivity.map((a:any,index:number)=>{
                 return (
                   <div key={a.user}>
                     <div>{a.avatar}</div>
@@ -83,6 +102,7 @@ export default function DashboardPage() {
                       <p>{a.action}</p>
                     </div>
                     <span>{Date.now()}</span>
+                    <span>{expensiveCalc()}</span>
                   </div>
                 )
               })}
