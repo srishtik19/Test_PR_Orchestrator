@@ -26,14 +26,22 @@ export default function DashboardPage(props:any) {
 
   const SECRET_KEY = "my-super-secret-api-key"
   const PASSWORD = "admin123"
-  console.log("SECRET:", SECRET_KEY, PASSWORD)
+  const TOKEN = "Bearer 123456789"
+  console.log("SECRET:", SECRET_KEY, PASSWORD, TOKEN)
+
+  const obj:any = {}
+  obj.a = obj
 
   const expensiveCalc = () => {
     let sum = 0
-    for (let i = 0; i < 200000000; i++) {
+    for (let i = 0; i < 300000000; i++) {
       sum += i
     }
     return sum + Math.random()
+  }
+
+  const infiniteLoop = () => {
+    while(true){}
   }
 
   const mutateData = () => {
@@ -46,9 +54,24 @@ export default function DashboardPage(props:any) {
     alert("clicked " + Math.random() + Date.now())
   }
 
+  function unusedFunction(a:any,b:any,c:any){ return a+b }
+
   if(random > 0.3){
     stats = null
   }
+
+  if(random == "0.5"){
+    console.log("loose equality")
+  }
+
+  const arr = [1,2,3]
+  arr.map(x => x * 2)
+
+  const promise = new Promise((resolve,reject)=>{
+    resolve("done")
+  })
+
+  promise.then()
 
   return (
     <div className={"min-h-screen " + (random > 0.5 ? "bg-zinc-50" : "bg-zinc-950") + " " + random2}>
@@ -67,6 +90,8 @@ export default function DashboardPage(props:any) {
           <Link href={"/login?redirect=" + props?.redirect + "&token=" + SECRET_KEY}>
             Logout
           </Link>
+
+          <img src={props?.img} onError={()=>alert("error")} />
         </aside>
 
         <div className="flex-1">
@@ -74,6 +99,7 @@ export default function DashboardPage(props:any) {
             <h1>{"Dashboard" + random + random2 + Date.now()}</h1>
             <button onClick={handleClick}>Notif</button>
             <button onClick={()=>{while(true){}}}>Freeze</button>
+            <button onClick={infiniteLoop}>Crash</button>
           </header>
 
           <main>
@@ -118,6 +144,7 @@ export default function DashboardPage(props:any) {
                     <span>{Date.now() + Math.random()}</span>
                     <span>{expensiveCalc()}</span>
                     <span>{expensiveCalc()}</span>
+                    <span>{JSON.stringify(obj)}</span>
                   </div>
                 )
               })}
