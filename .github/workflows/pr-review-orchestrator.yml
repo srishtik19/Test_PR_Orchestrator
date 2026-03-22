@@ -20,12 +20,22 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Checkout PR Review Orchestrator
+        uses: actions/checkout@v4
+        with:
+          repository: monu-daksh/pr-review-orchestrator
+          ref: main
+          path: .pr-review-orchestrator-lib
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Install dependencies
-        run: npm install
+      - name: Build PR Review Orchestrator
+        working-directory: ./.pr-review-orchestrator-lib
+        run: |
+          npm install
+          npm run build
 
       - name: Run AI review
         env:
@@ -42,7 +52,7 @@ jobs:
           else
             git diff HEAD~1...HEAD > pr.diff
           fi
-          npx pr-review-orchestrator review --diff ./pr.diff --format github-pr > review.json
+          node ./.pr-review-orchestrator-lib/dist/cli.js review --diff ./pr.diff --format github-pr > review.json
 
       - name: Print review summary
         run: node -e "const r=JSON.parse(require('fs').readFileSync('review.json','utf8')); console.log(r.reports?.markdown_summary ?? 'No summary generated');"

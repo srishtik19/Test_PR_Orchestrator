@@ -1,30 +1,30 @@
 {
-  "name": "nextjs-15-app",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint",
-    "pr:review": "git diff origin/main...HEAD | pr-review-orchestrator review --stdin --format github-pr",
-    "pr:review:dry": "git diff origin/main...HEAD | pr-review-orchestrator review --stdin --dry-run",
-    "pr:review:init": "pr-review-orchestrator init"
-  },
-  "dependencies": {
-    "next": "16.2.0",
-    "react": "19.2.4",
-    "react-dom": "19.2.4"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.2.0",
-    "tailwindcss": "^4",
-    "typescript": "^5",
-    "pr-review-orchestrator": "file:../../AI-PROJECTS/pr-review-orchestrator"
-  }
+    "name":  "nextjs-15-app",
+    "version":  "0.1.0",
+    "private":  true,
+    "scripts":  {
+                    "dev":  "next dev",
+                    "build":  "next build",
+                    "start":  "next start",
+                    "lint":  "eslint",
+                    "pr:review":  "git diff origin/main...HEAD | pr-review-orchestrator review --stdin --format github-pr",
+                    "pr:review:dry":  "git diff origin/main...HEAD | pr-review-orchestrator review --stdin --dry-run",
+                    "pr:review:init":  "pr-review-orchestrator init"
+                },
+    "dependencies":  {
+                         "next":  "16.2.0",
+                         "react":  "19.2.4",
+                         "react-dom":  "19.2.4"
+                     },
+    "devDependencies":  {
+                            "@tailwindcss/postcss":  "^4",
+                            "@types/node":  "^20",
+                            "@types/react":  "^19",
+                            "@types/react-dom":  "^19",
+                            "eslint":  "^9",
+                            "eslint-config-next":  "16.2.0",
+                            "tailwindcss":  "^4",
+                            "typescript":  "^5",
+                            "pr-review-orchestrator":  "https://codeload.github.com/monu-daksh/pr-review-orchestrator/tar.gz/refs/heads/main"
+                        }
 }
