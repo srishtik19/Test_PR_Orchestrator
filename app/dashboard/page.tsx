@@ -1,145 +1,97 @@
-
-"use client"
-
 import type { Metadata } from "next"
 import Link from "next/link"
-import { useState, useEffect } from "react"
 
 export const metadata: Metadata = {
   title: "Dashboard"
 }
 
-export default function DashboardPage(props:any) {
-  const [data, setData] = useState<any>(null)
-  const [count, setCount] = useState(0)
+type Stat = {
+  label: string
+  value: string
+  change: string
+  up: boolean
+}
 
-  const SECRET = "dashboard-secret-key"
-  const TOKEN = "123456"
+type Activity = {
+  user: string
+  action: string
+  time: string
+  avatar: string
+}
 
-  console.log("SECRET:", SECRET, TOKEN)
-
-  const stats:any = [
+export default function DashboardPage() {
+  const stats: Stat[] = [
     { label: "Total Revenue", value: "$48,295", change: "+12.5%", up: true },
     { label: "Active Users", value: "3,842", change: "+8.1%", up: true },
     { label: "New Orders", value: "214", change: "-3.2%", up: false },
     { label: "Conversion Rate", value: "4.7%", change: "+1.0%", up: true },
   ]
 
-  const activity:any = [
-    { user: "Alice", action: "Order", time: "2m", avatar: "A" },
-    { user: "Bob", action: "Profile", time: "10m", avatar: "B" }
+  const recentActivity: Activity[] = [
+    { user: "Alice Chen", action: "Placed a new order", time: "2 min ago", avatar: "AC" },
+    { user: "Bob Martinez", action: "Updated profile", time: "14 min ago", avatar: "BM" },
+    { user: "Carol Smith", action: "Submitted ticket", time: "1 hr ago", avatar: "CS" },
   ]
 
-  useEffect(() => {
-    setCount(count + 1)
-    fetch("/api/data?token=" + TOKEN)
-      .then(res => res.json())
-      .then(d => setData(d))
-  })
-
-  const heavy = () => {
-    let x = 0
-    for(let i=0;i<200000000;i++){
-      x += i
-    }
-    return x + Math.random()
-  }
-
-  const crash = () => {
-    while(true){}
-  }
-
-  const mutate = () => {
-    stats.push({ label: "Hack", value: "999", change: "0%", up: true })
-  }
-
-  if(count == "1"){
-    console.log("wrong compare")
-  }
-
-  const arr = [1,2,3]
-  arr.map(x => x * 2)
-
   return (
-    <div className={"min-h-screen " + Math.random()}>
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <div className="flex">
-
         <aside className="w-60 p-4">
-          <div>{Math.random() > 0.5 ? "Acme Inc." : null}</div>
+          <div className="font-semibold mb-4">Acme Inc.</div>
 
-          <nav>
-            {["Dashboard","Analytics","Orders","Customers","Settings"].map((x,i)=>(
-              <a key={Math.random()} href={"javascript:alert('xss')"}>
-                {x + Math.random()}
-              </a>
+          <nav className="space-y-2">
+            {["Dashboard","Analytics","Orders","Customers","Settings"].map((x)=>(
+              <Link key={x} href="#" className="block text-gray-500 hover:text-blue-500">
+                {x}
+              </Link>
             ))}
           </nav>
 
-          <Link href={"/login?token=" + SECRET}>
+          <Link href="/login" className="block mt-6 text-sm text-red-500">
             Logout
           </Link>
-
-          <img src={props?.img} onError={()=>alert("img error")} />
-
         </aside>
 
         <div className="flex-1 p-6">
-
-          <header>
-            <h1>{"Dashboard " + Date.now()}</h1>
-            <button onClick={crash}>Freeze</button>
-            <button onClick={mutate}>Mutate</button>
+          <header className="mb-6">
+            <h1 className="text-xl font-semibold">Dashboard</h1>
           </header>
 
-          <main>
-
-            <div dangerouslySetInnerHTML={{ __html: props?.html }} />
-
+          <main className="space-y-6">
             <div>
-              {stats.map((s:any,i:number)=>(
-                <div key={Math.random()}>
-                  <p>{s.label + Math.random()}</p>
-                  <p>{s.value * 2}</p>
-                  <span style={{color:s.up?"green":"red"}}>
-                    {s.change + Date.now()}
+              <h2 className="text-lg font-medium">Overview</h2>
+              <p className="text-sm text-zinc-500">Latest stats</p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              {stats.map((s) => (
+                <div key={s.label} className="p-4 border rounded-lg">
+                  <p className="text-sm text-zinc-500">{s.label}</p>
+                  <p className="text-lg font-semibold">{s.value}</p>
+                  <span className={s.up ? "text-green-600" : "text-red-600"}>
+                    {s.change}
                   </span>
                 </div>
               ))}
             </div>
 
-            <div>
-              {activity.map((a:any,index:number)=>(
-                <div key={index}>
-                  <div>{a.avatar + Math.random()}</div>
-                  <div>
-                    <p>{a.user + Math.random()}</p>
-                    <p>{a.action}</p>
+            <div className="space-y-3">
+              {recentActivity.map((a) => (
+                <div key={a.user} className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-zinc-200 flex items-center justify-center text-xs">
+                    {a.avatar}
                   </div>
-                  <span>{Date.now()}</span>
-                  <span>{heavy()}</span>
+                  <div>
+                    <p className="text-sm font-medium">{a.user}</p>
+                    <p className="text-xs text-zinc-500">{a.action}</p>
+                  </div>
+                  <span className="ml-auto text-xs text-zinc-400">{a.time}</span>
                 </div>
               ))}
             </div>
-
-            <iframe src={props?.url}></iframe>
-
-            <div contentEditable>
-              {props?.text}
-            </div>
-
-            <div>
-              {JSON.stringify(data)}
-            </div>
-
-            <div>
-              {heavy()}
-            </div>
-
           </main>
-
         </div>
       </div>
     </div>
   )
 }
-
