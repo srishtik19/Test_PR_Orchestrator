@@ -6,17 +6,17 @@ another_global = 999
 
 
 def do_stuff():
-    # Unused variable
+
     x = 100
 
-    # Bad naming
+
     a = 5
     b = 10
     c = a + b
     print(c)
 
-    # Shadowing built-in name
-    list = [1, 2, 3]  # ❌ overrides built-in 'list'
+
+    list = [1, 2, 3]  
     for i in range(0, len(list)):  # ❌ not pythonic
         print(list[i])
 
