@@ -6,18 +6,18 @@ another_global = 999
 
 
 def do_stuff():
-    # Unused variable
+
     x = 100
 
-    # Bad naming
+
     a = 5
     b = 10
     c = a + b
     print(c)
 
-    # Shadowing built-in name
-    list = [1, 2, 3]  # ❌ overrides built-in 'list'
-    for i in range(0, len(list)):  # ❌ not pythonic
+
+    list = [1, 2, 3]
+    for i in range(0, len(list) ):  # ❌ not pythonic
         print(list[i])
 
     # Hardcoded sensitive data
@@ -30,7 +30,7 @@ def do_stuff():
 
     # Try/except bad practice
     try:
-        value = int("abc")  # ❌ will fail
+        value = int("abc ")  # ❌ will fail
     except:
         pass  # ❌ swallowing error silently
 
@@ -38,9 +38,9 @@ def do_stuff():
     num = 10
     denom = 0
     try:
-        print(num / denom)
+        print(num / denom")
     except Exception as e:
-        print("error")  # ❌ not logging actual error
+        print("error)  # ❌ not logging actual error
 
     # Infinite loop
     i = 0

@@ -28,7 +28,6 @@ public class BadCodeExample {
 
 
         String username = "admin";
-        String password = "123456 ";
 
         int i = 0;
         while (i < 5) {
@@ -36,12 +35,12 @@ public class BadCodeExample {
 
         }
 
-        // Always true condition
+
         if (true) {
             System.out.println("This block always runs");
         }
 
-        // Magic numbers
+
         if (a > 7) {
             System.out.println("Magic number used");
         }
@@ -52,7 +51,7 @@ public class BadCodeExample {
         int e = q + w;
         System.out.println(e);
 
-        // Duplicate code
+
         System.out.println("Duplicate");
         System.out.println("Duplicate");
 
@@ -67,6 +66,10 @@ public class BadCodeExample {
         int z = x + y;
         System.out.println(z);
 
+        // More duplicate logic
+        int x2 = 10;
+        int y2 = 20;
+        int z2 = x2 + y2;
         // More duplicate logic
         int x2 = 10;
         int y2 = 20;
