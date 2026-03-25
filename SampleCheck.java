@@ -36,12 +36,12 @@ public class BadCodeExample {
 
         }
 
-        // Always true condition
+
         if (true) {
             System.out.println("This block always runs");
         }
 
-        // Magic numbers
+
         if (a > 7) {
             System.out.println("Magic number used");
         }
@@ -52,7 +52,7 @@ public class BadCodeExample {
         int e = q + w;
         System.out.println(e);
 
-        // Duplicate code
+
         System.out.println("Duplicate");
         System.out.println("Duplicate");
 
