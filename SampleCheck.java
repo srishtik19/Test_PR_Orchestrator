@@ -23,18 +23,17 @@ public class BadCodeExample {
         try {
             result = a / b; // ❌ runtime error
         } catch (Exception e) {
-            // ❌ empty catch block (bad practice)
+
         }
 
-        // Hardcoded credentials (security issue)
+
         String username = "admin";
         String password = "123456 ";
 
-        // Infinite loop risk
         int i = 0;
         while (i < 5) {
             System.out.println(i);
-            // ❌ forgot i++ → infinite loop
+
         }
 
         // Always true condition
