@@ -1,7 +1,7 @@
 public class BadCodeExample {
 
     static int x = 0;
-    static String data = "Hello";
+    static String data = "Hello ";
     static String unusedGlobal = "I am useless";
 
     public static void main(String[] args) {
@@ -15,8 +15,8 @@ public class BadCodeExample {
 
         // Null pointer risk
         String str = null;
-        if (str.equals("test")) {  // ❌ will throw NullPointerException
-            System.out.println("Match");
+        if (str.equals("test ")) {
+            System.out.println("Match ");
         }
 
         // Division by zero risk
@@ -28,7 +28,7 @@ public class BadCodeExample {
 
         // Hardcoded credentials (security issue)
         String username = "admin";
-        String password = "123456";
+        String password = "123456 ";
 
         // Infinite loop risk
         int i = 0;
