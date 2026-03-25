@@ -24,7 +24,6 @@
         "eslint": "^9",
         "eslint-config-next": "16.2.0",
         "tailwindcss": "^4",
-        "typescript": "^5",
-        "pr-review-orchestrator": "https://codeload.github.com/monu-daksh/pr-review-orchestrator/tar.gz/refs/heads/main"
+        "typescript": "^5"
     }
 }
